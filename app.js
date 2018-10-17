@@ -13,7 +13,7 @@ app.use(logger('dev'));
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/cdic', { useNewUrlParser: true });
 
-app.use('/', routes);
+app.use('/cdic', routes);
 
 module.exports = app;
 
