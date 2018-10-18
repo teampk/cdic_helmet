@@ -15,7 +15,7 @@ var options = {
   mode: 'text',
   pythonPath: '',
   pythonOptions: ['-u'],
-  scriptPath: './python-code',
+  scriptPath: './python',
   args: ['value1', 'value2']
 };
 
@@ -52,7 +52,7 @@ var upload = multer({
   storage: multer.diskStorage({
     destination: function (req, file, cb) {
       console.log('original name: ', file.originalname);
-      var folderPath = './public/images/inputimage/';
+      var folderPath = './public/images/input_image/';
       cb(null, folderPath);
     },
     filename: function (req, file, cb) {
