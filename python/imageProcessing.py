@@ -86,7 +86,7 @@ if __name__ == "__main__":
             h = box[3]
             draw_prediction(image, class_ids[i], confidences[i], round(x), round(y), round(x + w), round(y + h))
         perform_time = time.time() - start_time
-        print("수행시간:"+str(perform_time))
+        print("Performance Time:"+str(perform_time))
         cv2.imshow("object detection", image)
         cv2.waitKey()
         cv2.imwrite("object-detection.jpg", image)
