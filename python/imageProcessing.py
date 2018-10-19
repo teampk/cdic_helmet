@@ -20,15 +20,15 @@ def draw_prediction(img, class_id, confidence, x, y, x_plus_w, y_plus_h):
 
 if __name__ == "__main__":
 
-    # 환경변수가 없을 때 (for testing)
+    # No Environmental Variable (for testing)
     if len(sys.argv) == 1:
         print("MODE 0")
         image_file = "../public/images/input_image/dog.jpg"
         image = cv2.imread(image_file)
         image_gs = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-    # 환경변수가 한 개일 때 (for testing)
-    # sys.argv 1 -> 이미지 name
+    # One Environmental Variable (for testing)
+    # sys.argv 1 (Image Name)
     elif len(sys.argv) == 2:
         start_time = time.time()
         print("MODE 1 (argv:"+sys.argv[1]+")")
@@ -43,7 +43,7 @@ if __name__ == "__main__":
         scale = 0.00392
         classes = None
 
-        # 물체인식 할 물체 목록 class 들
+        # Classes that detect objects
         with open(args_classes, 'r') as f:
             classes = [line.strip() for line in f.readlines()]
         COLORS = np.random.uniform(0, 255, size=(len(classes), 3))
@@ -92,7 +92,7 @@ if __name__ == "__main__":
         cv2.imwrite("object-detection.jpg", image)
         cv2.destroyAllWindows()
 
-    # 환경변수가 두 개일 때 (through Server)
+    # Two Environmental Variable (through Server)
     # sys.argv 1 -> 기기 id
     # sys.argv 2 -> 이미지 name (사진 생성 날짜)
     elif len(sys.argv) == 3:
@@ -109,7 +109,7 @@ if __name__ == "__main__":
         scale = 0.00392
         classes = None
 
-        # 물체인식 할 물체 목록 class 들
+        # Classes that detect objects
         with open(args_classes, 'r') as f:
             classes = [line.strip() for line in f.readlines()]
         COLORS = np.random.uniform(0, 255, size=(len(classes), 3))
