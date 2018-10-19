@@ -93,8 +93,8 @@ if __name__ == "__main__":
         cv2.destroyAllWindows()
 
     # Two Environmental Variable (through Server)
-    # sys.argv 1 -> 기기 id
-    # sys.argv 2 -> 이미지 name (사진 생성 날짜)
+    # sys.argv 1 -> Device id
+    # sys.argv 2 -> Image name (Time of Image)
     elif len(sys.argv) == 3:
         start_time = time.time()
         print("MODE 2 (helmet:" + sys.argv[1]+"/image:"+sys.argv[2] + ")")
