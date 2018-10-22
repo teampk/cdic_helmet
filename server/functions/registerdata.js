@@ -13,6 +13,7 @@ function registerImageData(id, x, y, w, h, c, r){
     });
     newImageData.save()
     .then(function(){
+        // --- new data ---
         console.log('completely registered, id:', id);
     })
     .catch(function(err){

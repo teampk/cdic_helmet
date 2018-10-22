@@ -51,9 +51,10 @@ router.post('/process', function(req,res){
             }
             // labeRatio -> Label 너비 / 높이
             var labelRatio = parseFloat(data[3])/parseFloat(data[4]);
-            console.log('data->',randomId(), parseFloat(data[1]), parseFloat(data[2]), parseFloat(data[3]), parseFloat(data[4]), data[5], labelRatio);
+            var randomCreatedId = randomId();
+            console.log('data->', randomCreatedId, parseFloat(data[1]), parseFloat(data[2]), parseFloat(data[3]), parseFloat(data[4]), data[5], labelRatio);
             // result 에 대해서 db내에 있는 element 들과 비교 후, 범위 내에 있으면 대체
-            compareData(randomId(), parseFloat(data[1]), parseFloat(data[2]), parseFloat(data[3]), parseFloat(data[4]), data[5], labelRatio);
+            compareData(randomCreatedId, parseFloat(data[1]), parseFloat(data[2]), parseFloat(data[3]), parseFloat(data[4]), data[5], labelRatio);
             
             // registerData(randomId(), parseFloat(data[1]), parseFloat(data[2]), parseFloat(data[3]), parseFloat(data[4]), data[5], labelRatio);
           }
