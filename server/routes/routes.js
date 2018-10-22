@@ -43,43 +43,20 @@ router.post('/process', function(req,res){
           if (err) throw err;
           console.log('Results: %j', resultPython);
           console.log('Errors: %j', err);
-          console.log(randomId(), resultPython[0].split(' ')[1], resultPython[0].split(' ')[2], resultPython[0].split(' ')[3], resultPython[0].split(' ')[4], resultPython[0].split(' ')[5]);
-          
-          registerData(randomId(), resultPython[0].split(' ')[1], resultPython[0].split(' ')[2], resultPython[0].split(' ')[3], resultPython[0].split(' ')[4], resultPython[0].split(' ')[5]);
-          
-          /*
           for (var result in resultPython){
             var data = new Array();
             for (var i=0;i<6;i++){
               data[i] = resultPython[result].split(' ')[i];
             }
-            registerdata.registerImageData(randomId(), data[1], data[2], data[3], data[4], data[5])
-            .catch(function(err) {
-              console.log(err);
-              
-              res.status(err.status).json({
-                message: err.message
-              });
-              
-            });
+            // result 에 대해서 db내에 있는 element 들과 비교 후, 범위 내에 있으면 대체
+            console.log(data[1], data[2], data[3], data[4], data[5]);
+            registerData(data[1], data[2], data[3], data[4], data[5]);
           }
-          */
         });
         res.send('python code is sent! Check out the log');
     }
   });
 });
-
-var randomId = function()
-{
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for( var i=0; i < 12; i++ )
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    return text;
-}
 
 var upload = multer({
   storage: multer.diskStorage({
@@ -103,5 +80,16 @@ var upload = multer({
     callback(null, true);
   }
 }).any();
+
+var randomId = function()
+{
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 12; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+};
 
 module.exports = router;

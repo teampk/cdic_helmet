@@ -3,12 +3,11 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var imageDataSchema = mongoose.Schema({
-    dataId : {type: String, unique: true},
-    coordinateX     : String,
-    coordinateY 	: String,
-	width   : String,
-	height  : String,
-    class    : String,
+    coordinateX     : {type: String, require: true},
+    coordinateY 	: {type: String, require: true},
+	imageWidth   : {type: String, require: true},
+	imageHeight  : {type: String, require: true},
+    imageClass    : {type: String, require: true},
 	created_at  : String
 });
 

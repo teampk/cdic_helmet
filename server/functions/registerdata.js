@@ -1,31 +1,27 @@
 var imageData = require('../models/image');
 
-function registerImageData(id, x, y, w, h, c){
+function registerImageData(x, y, w, h, c){
     var newImageData = new imageData({
-        dataId: id,
         coordinateX: x,
         coordinateY: y,
-        width: w,
-        height: h,
-        class: c,
+        imageWidth: w,
+        imageHeight: h,
+        imageClass: c,
         created_at: new Date()
     });
     newImageData.save()
     .then(function(){
-        console.log('good');
+        console.log('completely registered');
     })
     .catch(function(err){
         if (err.code == 11000) {
-
-            console.log('errorroro');
-
+            console.log('---error code 11000---');
+            console.log(err);
         } else {
-
-            console.log('ooo');
+            console.log('---error else---');
+            console.log(err);
         }
     });
-
-
 }
 module.exports = registerImageData;
 
