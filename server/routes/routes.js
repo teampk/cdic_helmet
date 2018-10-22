@@ -5,7 +5,8 @@ var ps = require('python-shell');
 var resultPython;
 var mongoose = require ('mongoose');
 var tracking = require('../functions/tracking');
-var registerData = require('../functions/registerdata');
+var registerData = require('../functions/registerData');
+var compareData = require('../functions/compareData');
 
 var auth = require('basic-auth');
 var jwt = require('jsonwebtoken');
@@ -48,9 +49,13 @@ router.post('/process', function(req,res){
             for (var i=0;i<6;i++){
               data[i] = resultPython[result].split(' ')[i];
             }
+            // labeRatio -> Label 너비 / 높이
+            var labelRatio = parseFloat(data[3])/parseFloat(data[4]);
+            console.log('data->',randomId(), parseFloat(data[1]), parseFloat(data[2]), parseFloat(data[3]), parseFloat(data[4]), data[5], labelRatio);
             // result 에 대해서 db내에 있는 element 들과 비교 후, 범위 내에 있으면 대체
-            console.log(data[1], data[2], data[3], data[4], data[5]);
-            registerData(data[1], data[2], data[3], data[4], data[5]);
+            compareData(randomId(), parseFloat(data[1]), parseFloat(data[2]), parseFloat(data[3]), parseFloat(data[4]), data[5], labelRatio);
+            
+            // registerData(randomId(), parseFloat(data[1]), parseFloat(data[2]), parseFloat(data[3]), parseFloat(data[4]), data[5], labelRatio);
           }
         });
         res.send('python code is sent! Check out the log');

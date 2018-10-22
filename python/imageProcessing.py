@@ -109,7 +109,6 @@ if __name__ == "__main__":
         print(i, x, y, w, h, classes[class_ids[i]])
         draw_prediction(image, class_ids[i], confidences[i], int(round(x)), int(round(y)), int(round(x + w)), int(round(y + h)))
         
-
     perform_time = time.time() - start_time
     # print("Performance Time:" + str(perform_time))
     # cv2.imshow("object detection", image)
