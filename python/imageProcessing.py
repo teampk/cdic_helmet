@@ -111,8 +111,12 @@ if __name__ == "__main__":
         
     perform_time = time.time() - start_time
     # print("Performance Time:" + str(perform_time))
-    # cv2.imshow("object detection", image)
-    # cv2.waitKey()
-    # cv2.imwrite("object-detection.jpg", image)
+
+    # ( rasp image size = 3280 x 2464 )
+
+    #imageResized = cv2.resize(image, (820, 616))
+    #cv2.imshow("Object Detection", imageResized)
+    #cv2.waitKey()
+    #cv2.imwrite("object-detection.jpg", image)
     cv2.destroyAllWindows()
 

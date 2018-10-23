@@ -3,7 +3,7 @@ var registerData = require('./registerData');
 
 function compareImageData(id, x, y, w, h, c, r){
 
-    new Promise(function(resolve,reject){
+    return new Promise(function(resolve,reject){
 		var compareCondition = { $and:[{"labelClass": c}, 
 		{"labelRatio": {$gt:r-0.1, $lt:r+0.1}}
 		]};
@@ -13,6 +13,10 @@ function compareImageData(id, x, y, w, h, c, r){
 			console.log('found data:', foundDatas);
 			if (foundDatas[0]){
 				console.log(foundDatas[0].dataId);
+				if (foundDatas[0].labelWidth - w > 20){
+					console.log('it is coming...');
+				}
+
 			}
 		
 			// --- delete all old data---
@@ -20,7 +24,14 @@ function compareImageData(id, x, y, w, h, c, r){
 			.then(function(removedDatas){
 				console.log('removed');
 				// --- register new data ---
-				registerData(id, x, y, w, h, c, r);
+				registerData(id, x, y, w, h, c, r)
+				.then(function(result){
+					console.log('result', result);
+					resolve(result);
+				}, function(err){
+					console.log('err',err);
+					reject(err);
+				});
 				
 			})
 			.catch(function(err){
