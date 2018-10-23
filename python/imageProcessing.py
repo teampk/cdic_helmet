@@ -114,7 +114,7 @@ if __name__ == "__main__":
 
     # ( rasp image size = 3280 x 2464 )
 
-    #imageResized = cv2.resize(image, (820, 616))
+    imageResized = cv2.resize(image, (820, 616))
     #cv2.imshow("Object Detection", imageResized)
     #cv2.waitKey()
     #cv2.imwrite("object-detection.jpg", image)

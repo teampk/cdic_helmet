@@ -18,9 +18,9 @@ function registerImageData(id, x, y, w, h, c, r){
             console.log('completely registered, id:', id);
     
             if (w > 2000 || h > 1000){
-                resolve('vvvvibrate');
+                resolve('y');
             }else{
-                reject('do nothing');
+                reject('n');
             }
     
     

@@ -38,34 +38,64 @@ router.post('/process', function(req,res){
       options.args[0] = 'helmet32';
       // 사진 정보 (찍은 날짜, 시간)
       // options.args[1] = req.files[0].originalname;
-      options.args[1] = 'rasp_input_image.jpg';
+      options.args[1] = 'rasp_input_image.jpg'; 
 
       ps.PythonShell.run('imageProcessing.py', options, function (err, resultPython) {
-          if (err) throw err;
-          console.log('Results: %j', resultPython);
-          console.log('Errors: %j', err);
-          for (var result in resultPython){
-            var data = new Array();
-            for (var i=0;i<6;i++){
-              data[i] = resultPython[result].split(' ')[i];
+        if (err) throw err;
+        console.log('Results: %j', resultPython);
+        console.log('Errors: %j', err);
+
+        function getResultRasp(){
+          return new Promise(function(resolve, reject){
+            var responseRasp='';
+            var loop=0;
+            for (var result in resultPython){
+              console.log('length:',resultPython.length)
+              var data = new Array();
+              for (var i=0;i<6;i++){
+                data[i] = resultPython[result].split(' ')[i];
+              }
+              // labeRatio -> Label 너비 / 높이
+              var labelRatio = parseFloat(data[3])/parseFloat(data[4]);
+              var randomCreatedId = randomId();
+              console.log('data->', randomCreatedId, parseFloat(data[1]), parseFloat(data[2]), parseFloat(data[3]), parseFloat(data[4]), data[5], labelRatio);
+              // result 에 대해서 db내에 있는 element 들과 비교 후, 범위 내에 있으면 대체
+              compareData(randomCreatedId, parseFloat(data[1]), parseFloat(data[2]), parseFloat(data[3]), parseFloat(data[4]), data[5], labelRatio)
+              .then(function(result){
+                responseRasp += (result+'/');
+                console.log(responseRasp);
+                loop++;
+                console.log('loop:',loop);
+                if (loop==resultPython.length){
+                  resolve(responseRasp);
+                }
+              })
+              .catch(function(err){
+                console.log(err);
+              });
+
             }
-            // labeRatio -> Label 너비 / 높이
-            var labelRatio = parseFloat(data[3])/parseFloat(data[4]);
-            var randomCreatedId = randomId();
-            console.log('data->', randomCreatedId, parseFloat(data[1]), parseFloat(data[2]), parseFloat(data[3]), parseFloat(data[4]), data[5], labelRatio);
-            // result 에 대해서 db내에 있는 element 들과 비교 후, 범위 내에 있으면 대체
-            compareData(randomCreatedId, parseFloat(data[1]), parseFloat(data[2]), parseFloat(data[3]), parseFloat(data[4]), data[5], labelRatio)
-            .then(function(result){
-              res.send(result);
-            }, function(err){
-              res.send(err);
-            });
-          }
-        });
-        // res.send('python code is sent! Check out the log');
+
+          });
+        }
+
+        getResultRasp().then(function(finalData){
+          res.send(finalData);
+          console.log('--final--:', finalData);
+        })
+        .catch(function(err){
+          console.log('final error:',err);
+        });   
+      });
     }
   });
 });
+
+var promiseCompare = function (param){
+  return new Promise(function(resolve, reject){
+    compareData(randomCreatedId, parseFloat(data[1]), parseFloat(data[2]), parseFloat(data[3]), parseFloat(data[4]), data[5], labelRatio);
+  })
+}
 
 var upload = multer({
   storage: multer.diskStorage({
