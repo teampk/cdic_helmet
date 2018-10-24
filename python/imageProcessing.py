@@ -118,5 +118,5 @@ if __name__ == "__main__":
     #cv2.imshow("Object Detection", imageResized)
     #cv2.waitKey()
     #cv2.imwrite("object-detection.jpg", image)
-    cv2.destroyAllWindows()
+    #cv2.destroyAllWindows()
 

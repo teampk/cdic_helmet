@@ -73,9 +73,7 @@ router.post('/process', function(req,res){
               .catch(function(err){
                 console.log(err);
               });
-
             }
-
           });
         }
 
@@ -90,12 +88,6 @@ router.post('/process', function(req,res){
     }
   });
 });
-
-var promiseCompare = function (param){
-  return new Promise(function(resolve, reject){
-    compareData(randomCreatedId, parseFloat(data[1]), parseFloat(data[2]), parseFloat(data[3]), parseFloat(data[4]), data[5], labelRatio);
-  })
-}
 
 var upload = multer({
   storage: multer.diskStorage({
