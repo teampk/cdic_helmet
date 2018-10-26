@@ -79,7 +79,7 @@ router.post('/process', function(req,res){
         }
 
         getResultRasp().then(function(finalData){
-          res.send(finalData);
+          res.json(finalData);
           console.log('--final--:', finalData);
         })
         .catch(function(err){
