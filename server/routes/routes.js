@@ -49,28 +49,32 @@ router.post('/process', function(req,res){
           return new Promise(function(resolve, reject){
             var responseRasp='';
             var loop=0;
-            for (var result in resultPython){
-              var data = new Array();
-              for (var i=0;i<6;i++){
-                data[i] = resultPython[result].split(' ')[i];
-              }
-              // labeRatio -> Label 너비 / 높이
-              var labelRatio = parseFloat(data[3])/parseFloat(data[4]);
-              var randomCreatedId = randomId();
-              console.log('data->', randomCreatedId, parseFloat(data[1]), parseFloat(data[2]), parseFloat(data[3]), parseFloat(data[4]), data[5], labelRatio);
-              // result 에 대해서 db내에 있는 element 들과 비교 후, 범위 내에 있으면 대체
-              compareData(randomCreatedId, parseFloat(data[1]), parseFloat(data[2]), parseFloat(data[3]), parseFloat(data[4]), data[5], labelRatio)
-              .then(function(result){
-                responseRasp += (result+'/');
-                loop++;
-                if (loop==resultPython.length){
-                  resolve(responseRasp);
-                }
-              })
-              .catch(function(err){
-                console.log(err);
-              });
+            if (!resultPython){
+              resolve('none');
             }
+            else{
+              for (var result in resultPython){
+                var data = new Array();
+                for (var i=0;i<6;i++){
+                  data[i] = resultPython[result].split(' ')[i];
+                }
+                // labeRatio -> Label 너비 / 높이
+                var labelRatio = parseFloat(data[3])/parseFloat(data[4]);
+                var randomCreatedId = randomId();
+                console.log('data->', randomCreatedId, parseFloat(data[1]), parseFloat(data[2]), parseFloat(data[3]), parseFloat(data[4]), data[5], labelRatio);
+                // result 에 대해서 db내에 있는 element 들과 비교 후, 범위 내에 있으면 대체
+                compareData(randomCreatedId, parseFloat(data[1]), parseFloat(data[2]), parseFloat(data[3]), parseFloat(data[4]), data[5], labelRatio)
+                .then(function(result){
+                  responseRasp += (result+'/');
+                  loop++;
+                  if (loop==resultPython.length){
+                    resolve(responseRasp);
+                  }
+                })
+                .catch(function(err){
+                  console.log(err);
+                });
+            }}
           });
         }
 
