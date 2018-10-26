@@ -42,15 +42,14 @@ router.post('/process', function(req,res){
 
       ps.PythonShell.run('imageProcessing.py', options, function (err, resultPython) {
         if (err) throw err;
-        console.log('Results: %j', resultPython);
-        console.log('Errors: %j', err);
+        console.log('--- Python Results: %j', resultPython);
+        console.log('--- Python Errors: %j', err);
 
         function getResultRasp(){
           return new Promise(function(resolve, reject){
             var responseRasp='';
             var loop=0;
             for (var result in resultPython){
-              console.log('length:',resultPython.length)
               var data = new Array();
               for (var i=0;i<6;i++){
                 data[i] = resultPython[result].split(' ')[i];
@@ -63,9 +62,7 @@ router.post('/process', function(req,res){
               compareData(randomCreatedId, parseFloat(data[1]), parseFloat(data[2]), parseFloat(data[3]), parseFloat(data[4]), data[5], labelRatio)
               .then(function(result){
                 responseRasp += (result+'/');
-                console.log(responseRasp);
                 loop++;
-                console.log('loop:',loop);
                 if (loop==resultPython.length){
                   resolve(responseRasp);
                 }
