@@ -17,10 +17,10 @@ function registerImageData(id, x, y, w, h, c, r){
             // --- new data ---
             console.log('completely registered, id:', id);
     
-            if (w > 960 || h > 540){
-                resolve('detect_near('+ c +')');
+            if (w > 960 || h > 720){
+                resolve('detect_near('+ c +')('+w+'x'+h+')');
             }else{
-                reject('detect_far('+ c +')');
+                reject('detect_far('+ c +')('+w+'x'+h+')');
             }
     
     
